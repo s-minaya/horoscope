@@ -8,8 +8,28 @@
   </head>
   <body>
     <main>
-      <h1>Hola</h1>
+      <h1 class="text-5xl">Hóroscopo y fortuna</h1>
+      <p>Escribe tu fecha de nacimiento y descubre tu fortuna y horóscopo</p>
+      <section>
+        <form action="">
+          <label for="start">Fecha de nacimiento:</label>
+
+          <input
+            type="date"
+            id="start"
+            name="fecha de nacimiento"
+            value=""
+            min="1900-01-01"
+            max="2026-04-24"
+          />
+          <button>Calcular</button>
+        </form>
+      </section>
+      <section>
+        <p>Tu signo es: <span id="result-sign"></span></p>
+        <p>Tu fortuna para hoy es: <span id="result-fortune"></span></p>
+      </section>
     </main>
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
