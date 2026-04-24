@@ -1,1 +1,37 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/aspect-ratio";
+
+@layer base {
+  :root {
+    --font-cinzel: "Cinzel", serif;
+    --font-im-fell: "IM Fell English", serif;
+  }
+
+  body {
+    font-family: var(--font-cinzel);
+  }
+}
+
+@theme {
+  --font-cinzel: "Cinzel", serif;
+  --font-im-fell: "IM Fell English", serif;
+  --color-blood: #8b0000;
+  --color-bone: #e8dcc8;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.cursor {
+  animation: blink 0.8s infinite;
+  color: #f87171;
+}

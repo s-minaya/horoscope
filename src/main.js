@@ -1,43 +1,78 @@
 import "./style.css";
 ("use strict");
 
-// SECCIÓN DE QUERY-SELECTOR
-
+// SECCIÓN DE QUERY-SELECTORS
 const dateInput = document.querySelector("#start");
 const form = document.querySelector("form");
 const resultSign = document.querySelector("#result-sign");
 const resultFortune = document.querySelector("#result-fortune");
+const bubble = document.querySelector("#bubble");
+const bubbleArrow = document.querySelector("#bubble-arrow");
+const cursor = document.querySelector("#cursor");
 
 // SECCIÓN DE DATOS
+const zodiacSymbols = {
+  Aries: "♈",
+  Tauro: "♉",
+  Géminis: "♊",
+  Cáncer: "♋",
+  Leo: "♌",
+  Virgo: "♍",
+  Libra: "♎",
+  Escorpio: "♏",
+  Sagitario: "♐",
+  Capricornio: "♑",
+  Acuario: "♒",
+  Piscis: "♓",
+};
 
 const mysticFortunes = [
-  "Hoy no es tu día… pero tampoco es el de nadie, así que tranquilo.",
-  "Una gran oportunidad llegará… probablemente mientras estás en pijama.",
-  "Tu futuro es brillante, pero tus ojeras también.",
-  "Hoy podrías ser productivo… pero tampoco hay que forzar las cosas.",
-  "Alguien importante entrará en tu vida… o al menos en tus notificaciones.",
-  "La suerte está de tu lado, pero está distraída mirando el móvil.",
-  "Evita tomar decisiones importantes… como levantarte de la cama.",
-  "Un cambio se acerca… seguramente de planes a última hora.",
-  "Hoy es un buen día para empezar la dieta… mañana.",
-  "Tu intuición es fuerte, pero tu pereza más.",
-  "Algo increíble te pasará… pero no hoy.",
-  "La fortuna sonríe… pero a veces con sarcasmo.",
-  "Hoy brillarás… sobre todo de sudor.",
-  "No todo está perdido… solo un poco desordenado.",
-  "Alguien te admira… probablemente tu gato (si tuvieras uno).",
-  "Tus problemas se resolverán… eventualmente… quizá.",
-  "Hoy es un gran día para no hacer absolutamente nada.",
-  "El universo tiene un plan para ti… pero no quiere spoilers.",
-  "Una sorpresa te espera… o un susto, depende cómo lo mires.",
-  "Tu energía es contagiosa… lástima que sea sueño.",
-  "Vas a conseguir ese trabajo que quieres... pero solo si dejas de obsesionarte con el horóscopo.",
+  "He cruzado la oscuridad eterna para decirte esto: hoy no es tu día. Vuelve mañana.",
+  "Llevo siglos sobrevolando almas perdidas y la tuya... tiene arreglo. Poco, pero tiene.",
+  "Los muertos me susurran tu futuro. Dicen que el Wi-Fi te fallará en el momento más inoportuno.",
+  "He visto cosas que te harían llorar. Sobre todo tu historial de decisiones románticas.",
+  "El abismo me habla de ti. Dice que tienes potencial... para quedarte en el sofá.",
+  "Emerjo de las sombras para advertirte: alguien de tu pasado volverá. Sí, esa. Prepárate.",
+  "He sobrevolado tu futuro esta noche. Hay oscuridad, pero también hay pizza. Predomina la pizza.",
+  "Las tinieblas me revelan que hoy tendrás una gran idea. Y que no la ejecutarás. Como siempre.",
+  "He bebido de la luna llena para darte este mensaje: duerme más, te lo mereces.",
+  "Los espíritus nocturnos me dicen que alguien te admira en secreto. Yo también lo encuentro inquietante.",
+  "Contemplo tu aura desde las alturas. Tiene buena pinta... para ser la tuya.",
+  "La noche eterna me ha mostrado tu destino. Es raro, pero es tuyo y ya no hay devolución.",
+  "He atravesado dimensiones para traerte esta verdad: Mercurio retrógrado no es excusa para todo.",
+  "Mis oídos de criatura nocturna captan frecuencias que tú no puedes oír. Me están hablando de ti. No muy bien.",
+  "Salgo de mi cueva solo para ocasiones importantes. Esta no lo era, pero aquí estoy.",
+  "El eco de las catacumbas grita tu nombre. Tranquilo, solo es que debes dinero.",
+  "He visto el hilo de tu destino. Es corto, enredado y tiene un nudo raro a mitad.",
+  "La oscuridad me habla de una sorpresa próxima. Puede que sea buena. Puede que no. Soy un murciélago, no un oráculo.",
+  "Mis ecos nocturnos detectan que hoy tomarás una decisión importante. Espero que mejor que la última.",
+  "He sobrevolado tu futuro y he visto luz al final del túnel. Era un tren. Esquívalo.",
+  "Las sombras me susurran que el éxito se acerca. Viene despacio, pero viene. Como tú por las mañanas.",
 ];
-const randomNumber = Math.floor(Math.random() * mysticFortunes.length);
 
 // SECCIÓN DE FUNCIONES
+function showBubble() {
+  bubble.classList.remove("hidden");
+  bubbleArrow.classList.remove("hidden");
+}
+
+function typeText(element, text, speed = 40) {
+  element.textContent = "";
+  cursor.classList.remove("hidden");
+  let i = 0;
+  const timer = setInterval(() => {
+    element.textContent += text[i];
+    i++;
+    if (i >= text.length) {
+      clearInterval(timer);
+      cursor.classList.add("hidden");
+    }
+  }, speed);
+}
 
 function calculateHoroscope(birthMonth, birthDay) {
+  const randomNumber = Math.floor(Math.random() * mysticFortunes.length);
+
   if (
     (birthMonth === 9 && birthDay >= 24 && birthDay <= 30) ||
     (birthMonth === 10 && birthDay <= 23 && birthDay >= 1)
@@ -99,24 +134,28 @@ function calculateHoroscope(birthMonth, birthDay) {
   ) {
     return { sign: "Piscis", fortune: mysticFortunes[randomNumber] };
   } else {
-    return "Fecha de nacimiento no válida";
+    return null;
   }
 }
 
 // SECCIÓN DE EVENTOS
-
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   if (!dateInput.value) {
-    resultSign.textContent = "Por favor selecciona una fecha";
-    resultFortune.textContent = "";
+    showBubble();
+    resultSign.textContent = "🦇 ...";
+    typeText(
+      resultFortune,
+      "Mortal impaciente. Primero dime cuándo naciste. Las tinieblas no funcionan con datos vacíos.",
+    );
     return;
   }
 
   const [year, month, day] = dateInput.value.split("-");
   const horoscope = calculateHoroscope(Number(month), Number(day));
 
-  resultSign.textContent = `Tu signo es ${horoscope.sign}`;
-  resultFortune.textContent = `Tu fortuna es: ${horoscope.fortune}`;
+  showBubble();
+  resultSign.textContent = `${zodiacSymbols[horoscope.sign]} ${horoscope.sign}`;
+  typeText(resultFortune, horoscope.fortune);
 });

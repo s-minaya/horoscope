@@ -2,34 +2,111 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Horoscopo</title>
+    <title>Horóscopo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=IM+Fell+English:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <main>
-      <h1 class="text-5xl">Hóroscopo y fortuna</h1>
-      <p>Escribe tu fecha de nacimiento y descubre tu fortuna y horóscopo</p>
-      <section>
-        <form action="">
-          <label for="start">Fecha de nacimiento:</label>
 
-          <input
-            type="date"
-            id="start"
-            name="fecha de nacimiento"
-            value=""
-            min="1900-01-01"
-            max="2026-04-24"
-          />
-          <button>Calcular</button>
+  <body
+    class="relative flex max-h-screen flex-col items-center justify-center bg-[url('/img/horoscope.jpg')] bg-cover bg-fixed bg-center px-4 py-12 lg:min-h-screen"
+  >
+    <div class="pointer-events-none fixed inset-0 bg-black/75"></div>
+
+    <main
+      class="relative z-10 flex w-full max-w-sm flex-col items-center gap-8 lg:max-w-xl"
+    >
+      <!-- Header -->
+      <div class="text-center">
+        <p
+          class="text-md mb-5 font-bold tracking-[0.4em] text-red-700 uppercase lg:text-2xl"
+        >
+          ✦ los astros no mienten... mucho ✦
+        </p>
+        <h1
+          class="font-im-fell text-5xl font-black text-zinc-100 drop-shadow-lg lg:m-10 lg:text-7xl"
+        >
+          HORÓSCOPO
+        </h1>
+      </div>
+
+      <!-- Formulario -->
+      <div
+        class="w-full rounded-xl border border-red-800 bg-zinc-900/95 p-6 lg:p-8"
+      >
+        <form action="">
+          <div class="flex flex-col gap-4">
+            <label
+              for="start"
+              class="text-center font-im-fell text-xs tracking-[0.3em] text-zinc-300 uppercase lg:text-xl"
+            >
+              ¿Cuándo llegaste a este mundo cruel?
+            </label>
+            <input
+              type="date"
+              id="start"
+              name="fecha de nacimiento"
+              min="1900-01-01"
+              max="2026-04-24"
+              class="rounded-lg border border-red-800 bg-zinc-800 px-4 py-3 text-zinc-100 transition-colors focus:border-red-500 focus:outline-none"
+              style="color-scheme: dark"
+            />
+            <button
+              class="text-md mt-2 cursor-pointer rounded-lg bg-red-900 px-8 py-3 text-sm font-bold tracking-widest text-zinc-100 uppercase transition-all hover:bg-red-800"
+            >
+              Revelar mi destino
+            </button>
+          </div>
         </form>
-      </section>
-      <section>
-        <p>Tu signo es: <span id="result-sign"></span></p>
-        <p>Tu fortuna para hoy es: <span id="result-fortune"></span></p>
-      </section>
+      </div>
+
+      <!-- Bocadillo + triángulo + murciélago -->
+      <div class="flex w-full flex-col items-center">
+        <div
+          id="bubble"
+          class="hidden w-full rounded-xl border border-red-800 bg-amber-50/20 p-5"
+        >
+          <p
+            id="result-sign"
+            class="text-md mb-1 text-base font-bold tracking-widest text-red-400 lg:text-xl"
+          ></p>
+          <p
+            class="font-im-fell text-xl leading-relaxed font-thin text-zinc-200 italic lg:text-2xl"
+          >
+            "<span id="result-fortune"></span
+            ><span id="cursor" class="cursor hidden">|</span>"
+          </p>
+        </div>
+
+        <!-- Triángulo -->
+        <div
+          id="bubble-arrow"
+          class="hidden h-0 w-0"
+          style="
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 13px solid #991b1b;
+          "
+        ></div>
+
+        <!-- Murciélago -->
+        <img
+          src="/img/bat.gif"
+          alt="murciélago oráculo"
+          class="w-24 drop-shadow-lg lg:w-44"
+        />
+      </div>
+
+      <p class="text-md font-im-fell tracking-widest text-red-900 lg:text-xl">
+        ✦ consulta bajo tu propia responsabilidad ✦
+      </p>
     </main>
+
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>
